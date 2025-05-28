@@ -1,0 +1,4 @@
+ssh-keygen -t rsa -b 4096
+
+ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@192.168.33.20
+ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@192.168.33.21

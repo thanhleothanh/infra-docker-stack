@@ -1,0 +1,26 @@
+# run with vmware_fusion
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-24.04"
+  config.vm.box_version = "202502.21.0"
+
+  # VMware Fusion provider configuration
+  config.vm.provider "vmware_fusion" do |vb|
+    vb.vmx["memsize"] = "2048"   # Memory in MB
+    vb.vmx["numvcpus"] = "2"     # Number of CPUs
+  end
+
+  config.vm.define "ubuntu-01" do |ubuntu|
+    ubuntu.vm.hostname = "ubuntu-01"
+    ubuntu.vm.network "private_network", ip: "192.168.33.20"
+    ubuntu.vm.provision "shell", path: "scripts/startup.sh"
+    ubuntu.vm.provision "shell", path: "scripts/install-dependencies.sh", run: "once"
+  end
+
+  config.vm.define "ubuntu-02" do |ubuntu|
+    ubuntu.vm.hostname = "ubuntu-02"
+    ubuntu.vm.network "private_network", ip: "192.168.33.21"
+    ubuntu.vm.provision "shell", path: "scripts/startup.sh"
+    ubuntu.vm.provision "shell", path: "scripts/install-dependencies.sh", run: "once"
+  end
+end
