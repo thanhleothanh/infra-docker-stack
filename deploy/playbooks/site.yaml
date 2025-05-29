@@ -1,0 +1,6 @@
+- name: Deploy infra services in a docker stack
+  hosts: managers,workers
+  gather_facts: true
+  become: true
+  roles:
+    - infra

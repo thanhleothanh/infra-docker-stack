@@ -1,0 +1,8 @@
+- name: 1.1 install-docker.yaml
+  include_tasks: install-docker.yaml
+
+- name: 1.2 prepare-swarm.yaml
+  include_tasks: prepare-swarm.yaml
+
+- name: 1.3 prepare-networks.yaml
+  include_tasks: prepare-networks.yaml

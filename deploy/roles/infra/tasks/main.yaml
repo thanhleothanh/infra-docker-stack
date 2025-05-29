@@ -1,0 +1,11 @@
+- name: '1pre-provision'
+  import_role:
+    name: infra/sub-roles/1pre-provision
+
+- name: '2provision'
+  import_role:
+    name: infra/sub-roles/2provision
+
+- name: '3post-provision'
+  import_role:
+    name: infra/sub-roles/3post-provision

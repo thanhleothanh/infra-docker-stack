@@ -1,0 +1,18 @@
+- name: Create Docker public network
+  community.docker.docker_network:
+    name: 'public-net'
+    driver: overlay
+    appends: true
+    attachable: true
+    state: present
+  when: inventory_hostname == groups['managers'][0]
+
+- name: Create Docker private network
+  community.docker.docker_network:
+    name: 'private-net'
+    driver: overlay
+    internal: true
+    appends: true
+    attachable: true
+    state: present
+  when: inventory_hostname == groups['managers'][0]
