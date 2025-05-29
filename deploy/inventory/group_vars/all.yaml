@@ -4,3 +4,9 @@ arch: 'arm64'
 ansible_user: vagrant
 ansible_become: true
 ansible_become_method: sudo
+
+# Traefik
+host_domain: 'thanh.test'
+traefik_certs_docker_volumn: 'traefik_certs'
+traefik_certs_acme_email: 'example@gmail.com'
+traefik_log_level: 'DEBUG'

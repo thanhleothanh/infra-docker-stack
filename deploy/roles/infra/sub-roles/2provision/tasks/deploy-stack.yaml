@@ -1,0 +1,6 @@
+- name: Deploy the infra stack
+  ansible.builtin.shell:
+    cmd: docker stack deploy infra --prune
+      --compose-file /etc/traefik/compose-traefik.yaml
+  become: true
+  when: inventory_hostname == groups['managers'][0]

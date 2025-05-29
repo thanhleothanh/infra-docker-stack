@@ -1,0 +1,33 @@
+api:
+  dashboard: true
+  insecure: false
+
+log:
+  level: {{ traefik_log_level }}
+  format: common
+
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entrypoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    address: :443
+
+providers:
+  swarm:
+    endpoint: unix:///var/run/docker.sock
+    exposedByDefault: false
+    network: public-net
+    watch: true
+
+certificatesResolvers:
+  leresolver:
+    acme:
+      email: {{ traefik_certs_acme_email }}
+      storage: /etc/traefik/certs/acme.json
+      tlsChallenge: {}

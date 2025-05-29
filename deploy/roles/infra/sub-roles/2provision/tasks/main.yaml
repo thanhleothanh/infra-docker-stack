@@ -1,0 +1,5 @@
+- name: 2.1 prepare-traefik.yaml
+  include_tasks: prepare-traefik.yaml
+
+- name: 2.2 deploy-stack.yaml
+  include_tasks: deploy-stack.yaml

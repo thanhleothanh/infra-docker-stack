@@ -1,0 +1,34 @@
+- name: Create docker volumn for traefik
+  community.docker.docker_volume:
+    name: '{{ traefik_certs_docker_volumn }}'
+    state: present
+  become: true
+  when: inventory_hostname == groups['managers'][0]
+
+- name: Create directory for traefik config
+  ansible.builtin.file:
+    path: /etc/traefik
+    state: directory
+    mode: 0644
+  become: true
+  when: inventory_hostname == groups['managers'][0]
+
+- name: Copy traefik config yaml to swarm manager
+  ansible.builtin.template:
+    src: 'templates/traefik-config.j2'
+    dest: /etc/traefik/traefik.yaml
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  when: inventory_hostname == groups['managers'][0]
+
+- name: Copy traefik docker compose yaml to swarm manager
+  ansible.builtin.template:
+    src: 'templates/compose-traefik.j2'
+    dest: /etc/traefik/compose-traefik.yaml
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  when: inventory_hostname == groups['managers'][0]
