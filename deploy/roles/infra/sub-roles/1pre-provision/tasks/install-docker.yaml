@@ -1,4 +1,10 @@
-- name: Install apt-transport-https ca-certificates curl gnupg lsb-release
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  become: true
+
+- name: Install dependencies
   ansible.builtin.apt:
     name:
       - apt-transport-https
