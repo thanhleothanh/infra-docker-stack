@@ -29,15 +29,3 @@ services:
         limits:
           cpus: "0.5"
           memory: 256M
-      labels:
-        - traefik.enable=true
-        # format for exposing other services
-        - traefik.http.routers.traefik_dashboard.rule=Host(`traefik.{{ host_domain }}`)
-        - traefik.http.routers.traefik_dashboard.entrypoints=websecure
-        - traefik.http.routers.traefik_dashboard.service=api@internal
-        - traefik.http.services.api@internal.loadbalancer.server.port=8080
-        # middlewares
-        - traefik.http.middlewares.simple_auth.basicauth.users=thanh:$$apr1$$Ks.lILyE$$4hnbFR1eV8Mr0OZKq4L4M0
-        - traefik.http.routers.traefik_dashboard.middlewares=simple_auth
-
-

@@ -34,6 +34,7 @@ certificatesResolvers:
   leresolver:
     acme:
       email: {{ traefik_certs_acme_email }}
+      caServer: {{ traefik_certs_ca_server }}
       storage: /etc/traefik/certs/acme.json
       dnsChallenge:
         provider: {{ traefik_certs_dns_provider }}
