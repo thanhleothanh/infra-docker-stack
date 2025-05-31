@@ -12,7 +12,7 @@ traefik_log_level: 'DEBUG'
 traefik_certs_docker_volume: 'traefik_certs'
 traefik_certs_acme_email: 'placeholder@placeholder.com' #change this for prod
 traefik_certs_ca_server: 'https://acme-staging-v02.api.letsencrypt.org/directory' #change this for prod
-traefik_certs_dns_provider: 'placeholder' #change this for prod
+traefik_certs_dns_provider: 'cloudflare' #change this for prod
 
 # Portainer
 portainer_version: '2.27.6'

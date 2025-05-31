@@ -18,6 +18,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/traefik/traefik.yaml:/etc/traefik/traefik.yaml
       - {{ traefik_certs_docker_volume }}:/etc/traefik/certs
+    environment:
+      - CF_DNS_API_TOKEN=$${CF_DNS_API_TOKEN:cloudflare_token}
     networks:
       - public-net
     deploy:

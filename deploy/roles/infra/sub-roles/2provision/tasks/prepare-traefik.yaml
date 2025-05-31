@@ -13,6 +13,14 @@
   become: true
   when: inventory_hostname == groups['managers'][0]
 
+- name: Create directory for traefik certs
+  ansible.builtin.file:
+    path: /etc/traefik/certs
+    state: directory
+    mode: 0644
+  become: true
+  when: inventory_hostname == groups['managers'][0]
+
 - name: Copy traefik config yaml to swarm manager
   ansible.builtin.template:
     src: 'templates/traefik-config.j2'

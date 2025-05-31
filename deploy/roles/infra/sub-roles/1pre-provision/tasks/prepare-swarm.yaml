@@ -1,8 +1,8 @@
 - name: Initialize Swarm for the main manager
   community.docker.docker_swarm:
     state: present
-    advertise_addr: '{{ ansible_host }}:2377'
-    listen_addr: '{{ ansible_host }}:2377'
+    advertise_addr: '{{ advertise_host }}:2377'
+    listen_addr: '{{ advertise_host }}:2377'
   when: inventory_hostname == groups['managers'][0]
 
 - name: Wait for swarm manager to be ready
@@ -32,16 +32,18 @@
   community.docker.docker_swarm:
     state: join
     join_token: "{{ hostvars[groups['managers'][0]]['manager_token']['stdout'] }}"
-    remote_addrs: ["{{ hostvars[groups['managers'][0]]['ansible_host'] }}:2377"]
-    advertise_addr: '{{ ansible_host }}:2377'
-    listen_addr: '{{ ansible_host }}:2377'
+    remote_addrs:
+      ["{{ hostvars[groups['managers'][0]]['advertise_host'] }}:2377"]
+    advertise_addr: '{{ advertise_host }}:2377'
+    listen_addr: '{{ advertise_host }}:2377'
   when: inventory_hostname in groups['managers'] and inventory_hostname != groups['managers'][0]
 
 - name: Join Swarm as a worker
   community.docker.docker_swarm:
     state: join
     join_token: "{{ hostvars[groups['managers'][0]]['worker_token']['stdout'] }}"
-    remote_addrs: ["{{ hostvars[groups['managers'][0]]['ansible_host'] }}:2377"]
-    advertise_addr: '{{ ansible_host }}:2377'
-    listen_addr: '{{ ansible_host }}:2377'
+    remote_addrs:
+      ["{{ hostvars[groups['managers'][0]]['advertise_host'] }}:2377"]
+    advertise_addr: '{{ advertise_host }}:2377'
+    listen_addr: '{{ advertise_host }}:2377'
   when: inventory_hostname in groups['workers']
