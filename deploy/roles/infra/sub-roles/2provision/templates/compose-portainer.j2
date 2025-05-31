@@ -1,0 +1,56 @@
+version: '3.8'
+
+volumes:
+  {{ portainer_data_docker_volume }}:
+    external: true
+
+networks:
+  public-net:
+    external: true
+  portainer-private-net:
+    external: true
+
+services:
+  portainer_server:
+    image: portainer/portainer-ce:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - {{ portainer_data_docker_volume }}:/portainer_data
+    networks:
+      - public-net
+      - portainer-private-net
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.portainer_ui.rule=Host(`portainer.{{ host_domain }}`)
+        - traefik.http.routers.portainer_ui.entrypoints=websecure
+        - traefik.http.routers.portainer_ui.service=portainer_server
+        - traefik.http.services.portainer_server.loadbalancer.server.port=9000
+        - traefik.http.middlewares.simple_auth.basicauth.users=thanh:$$apr1$$Ks.lILyE$$4hnbFR1eV8Mr0OZKq4L4M0
+        - traefik.http.routers.portainer_ui.middlewares=simple_auth
+
+
+  portainer_agent:
+    image: portainer/agent:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - portainer-private-net
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 128M
+    environment:
+      - AGENT_CLUSTER_ADDR=tasks.portainer_server
+      - AGENT_PORT=8000

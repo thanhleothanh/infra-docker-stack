@@ -2,5 +2,6 @@
   ansible.builtin.shell:
     cmd: docker stack deploy infra --prune
       --compose-file /etc/traefik/compose-traefik.yaml
+      --compose-file /etc/portainer/compose-portainer.yaml
   become: true
   when: inventory_hostname == groups['managers'][0]

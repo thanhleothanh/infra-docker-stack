@@ -12,3 +12,6 @@ traefik_certs_acme_email: 'example@gmail.com'
 traefik_certs_ca_server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
 traefik_certs_dns_provider: 'namecheap'
 traefik_log_level: 'DEBUG'
+
+# Portainer
+portainer_data_docker_volume: 'portainer_data'
