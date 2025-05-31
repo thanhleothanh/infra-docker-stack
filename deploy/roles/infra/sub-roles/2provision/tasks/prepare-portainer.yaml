@@ -19,7 +19,7 @@
   ansible.builtin.file:
     path: /etc/portainer
     state: directory
-    mode: 0644
+    mode: 0755
   become: true
   when: inventory_hostname == groups['managers'][0]
 
@@ -27,8 +27,6 @@
   ansible.builtin.template:
     src: 'templates/compose-portainer.j2'
     dest: /etc/portainer/compose-portainer.yaml
-    owner: root
-    group: root
     mode: 0644
   become: true
   when: inventory_hostname == groups['managers'][0]

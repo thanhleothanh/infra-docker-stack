@@ -9,15 +9,7 @@
   ansible.builtin.file:
     path: /etc/traefik
     state: directory
-    mode: 0644
-  become: true
-  when: inventory_hostname == groups['managers'][0]
-
-- name: Create directory for traefik certs
-  ansible.builtin.file:
-    path: /etc/traefik/certs
-    state: directory
-    mode: 0644
+    mode: 0755
   become: true
   when: inventory_hostname == groups['managers'][0]
 
@@ -25,8 +17,6 @@
   ansible.builtin.template:
     src: 'templates/traefik-config.j2'
     dest: /etc/traefik/traefik.yaml
-    owner: root
-    group: root
     mode: 0644
   become: true
   when: inventory_hostname == groups['managers'][0]
@@ -35,8 +25,6 @@
   ansible.builtin.template:
     src: 'templates/compose-traefik.j2'
     dest: /etc/traefik/compose-traefik.yaml
-    owner: root
-    group: root
     mode: 0644
   become: true
   when: inventory_hostname == groups['managers'][0]
