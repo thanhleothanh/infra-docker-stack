@@ -17,6 +17,11 @@ entryPoints:
           permanent: true
   websecure:
     address: :443
+    http:
+      tls:
+        certresolver: leresolver 
+        # this is for catch-all requests to traefik, before even getting to the routers
+        # if having a multi-host environment then this needs to be adapted
 
 providers:
   swarm:
@@ -30,4 +35,6 @@ certificatesResolvers:
     acme:
       email: {{ traefik_certs_acme_email }}
       storage: /etc/traefik/certs/acme.json
-      tlsChallenge: {}
+      dnsChallenge:
+        provider: {{ traefik_certs_dns_provider }}
+        # have to manually configure secrets that contain the environment variables that are used by provider

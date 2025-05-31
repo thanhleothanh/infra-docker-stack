@@ -1,7 +1,7 @@
 version: '3.8'
 
 volumes:
-  {{ traefik_certs_docker_volumn }}:
+  {{ traefik_certs_docker_volume }}:
     external: true
 
 networks:
@@ -17,7 +17,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/traefik/traefik.yaml:/etc/traefik/traefik.yaml
-      - {{ traefik_certs_docker_volumn }}:/etc/traefik/certs
+      - {{ traefik_certs_docker_volume }}:/etc/traefik/certs
     networks:
       - public-net
     deploy:
@@ -25,17 +25,17 @@ services:
       replicas: 1
       placement:
         constraints: [node.role == manager]
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
       labels:
         - traefik.enable=true
-
         # format for exposing other services
         - traefik.http.routers.traefik_dashboard.rule=Host(`traefik.{{ host_domain }}`)
         - traefik.http.routers.traefik_dashboard.entrypoints=websecure
-        - traefik.http.routers.traefik_dashboard.tls=true
-        - traefik.http.routers.traefik_dashboard.tls.certresolver=leresolver
         - traefik.http.routers.traefik_dashboard.service=api@internal
         - traefik.http.services.api@internal.loadbalancer.server.port=8080
-
         # middlewares
         - traefik.http.middlewares.simple_auth.basicauth.users=thanh:$$apr1$$Ks.lILyE$$4hnbFR1eV8Mr0OZKq4L4M0
         - traefik.http.routers.traefik_dashboard.middlewares=simple_auth

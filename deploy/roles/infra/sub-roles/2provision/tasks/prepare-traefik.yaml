@@ -1,6 +1,6 @@
-- name: Create docker volumn for traefik
+- name: Create docker volume for traefik
   community.docker.docker_volume:
-    name: '{{ traefik_certs_docker_volumn }}'
+    name: '{{ traefik_certs_docker_volume }}'
     state: present
   become: true
   when: inventory_hostname == groups['managers'][0]
