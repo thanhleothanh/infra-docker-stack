@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 volumes:
   {{ traefik_certs_docker_volume }}:
@@ -10,7 +10,7 @@ networks:
 
 services:
   traefik:
-    image: traefik:v3.4.1
+    image: traefik:{{ traefik_version }}
     ports:
       - 80:80
       - 443:443

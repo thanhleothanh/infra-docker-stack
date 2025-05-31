@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 volumes:
   {{ portainer_data_docker_volume }}:
@@ -12,7 +12,7 @@ networks:
 
 services:
   portainer_server:
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ce:{{ portainer_version }}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - {{ portainer_data_docker_volume }}:/portainer_data
@@ -39,7 +39,7 @@ services:
 
 
   portainer_agent:
-    image: portainer/agent:latest
+    image: portainer/agent:{{ portainer_version }}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /var/lib/docker/volumes:/var/lib/docker/volumes
