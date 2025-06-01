@@ -26,8 +26,8 @@ services:
         constraints: [node.role == manager]
       resources:
         limits:
-          cpus: "0.5"
-          memory: 256M
+          cpus: "0.2"
+          memory: 128M
       labels:
         - traefik.enable=true
         - traefik.http.routers.portainer_ui.rule=Host(`portainer.{{ host_domain }}`)
@@ -49,7 +49,7 @@ services:
       mode: global
       resources:
         limits:
-          cpus: "0.2"
+          cpus: "0.1"
           memory: 128M
     environment:
       - AGENT_CLUSTER_ADDR=tasks.portainer_server

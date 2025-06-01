@@ -19,7 +19,7 @@ services:
       - /etc/traefik/traefik.yaml:/etc/traefik/traefik.yaml
       - {{ traefik_certs_docker_volume }}:/etc/traefik/certs
     environment:
-      - CF_DNS_API_TOKEN=$${CF_DNS_API_TOKEN:cloudflare_token}
+      - CF_DNS_API_TOKEN=$CF_DNS_API_TOKEN # prepare environment on docker host machine
     networks:
       - public-net
     deploy:
@@ -29,5 +29,5 @@ services:
         constraints: [node.role == manager]
       resources:
         limits:
-          cpus: "0.5"
-          memory: 256M
+          cpus: "0.2"
+          memory: 128M
