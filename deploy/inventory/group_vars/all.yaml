@@ -1,6 +1,4 @@
 ---
-os: 'linux'
-arch: 'arm64'
 ansible_user: vagrant
 ansible_become: true
 ansible_become_method: sudo
